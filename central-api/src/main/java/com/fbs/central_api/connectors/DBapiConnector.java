@@ -1,5 +1,6 @@
 package com.fbs.central_api.connectors;
 
+import com.fbs.central_api.models.Airline;
 import com.fbs.central_api.models.AppUser;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
@@ -40,6 +41,25 @@ public class DBapiConnector {
        log.info("Response: "+response.toString());
 
         return response.getBody();
+    }
+
+    public Airline callCreateAirlineEndpoint(Airline airline){
+
+        log.info("Inside callCreateAirlineEndpoint method with airline object "+airline.toString());
+        String url=dbApiBaseurl+"/airline/create";
+
+        RequestEntity request=RequestEntity.post(url).body(airline);
+
+        log.info("Calling dbApi create airline endpoint");
+
+        RestTemplate restTemplate= new RestTemplate();
+
+        ResponseEntity<Airline> response=restTemplate.exchange(url,HttpMethod.POST,request, Airline.class);
+
+        log.info("Response: "+response.toString());
+
+        return response.getBody();
+
     }
 
 }

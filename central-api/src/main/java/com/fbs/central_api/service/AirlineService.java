@@ -2,6 +2,7 @@ package com.fbs.central_api.service;
 
 import com.fbs.central_api.connectors.DBapiConnector;
 import com.fbs.central_api.dto.AirlineRegistrationDto;
+import com.fbs.central_api.models.Airline;
 import com.fbs.central_api.models.AppUser;
 import com.fbs.central_api.utility.Mapper;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,7 @@ public class AirlineService {
 
     private static final Logger log = LoggerFactory.getLogger(AirlineService.class);
 
-    public void registerAirline(AirlineRegistrationDto airlineRegistrationDto){
+    public Airline registerAirline(AirlineRegistrationDto airlineRegistrationDto){
         log.info("airlineService registerAirline method called"+airlineRegistrationDto.toString());
 
         AppUser airlineAdmin= mapper.mapAirlineDetailsDtoToAppUser(airlineRegistrationDto);
@@ -33,6 +34,11 @@ public class AirlineService {
         log.info("Calling dbApiConnector callCreateUserMethod  with payload: "+airlineAdmin.toString());
 
         airlineAdmin=dBapiConnector.callCreateUserEndpoint(airlineAdmin);
+
+        Airline airline=mapper.mapAirlineDetailsDtoToAirlineObject(airlineRegistrationDto,airlineAdmin);
+
+        airline=dBapiConnector.callCreateAirlineEndpoint(airline);
+
 
 
     }

@@ -1,9 +1,7 @@
-package com.fbs.central_api.models;
-
+package com.fbs.notification_api.models;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
-
 
 public class Airline {
 

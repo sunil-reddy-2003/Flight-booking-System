@@ -1,6 +1,5 @@
 package com.fbs.central_api.dto;
 
-import lombok.*;
 
 
 public class AirlineRegistrationDto {
