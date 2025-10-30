@@ -11,17 +11,26 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Slf4j
 public class AirlineService {
 
     Mapper mapper;
     DBapiConnector dBapiConnector;
+    UserService userService;
+    MailService mailService;
 
     @Autowired
-    public AirlineService(Mapper mapper,DBapiConnector dBapiConnector){
+    public AirlineService(Mapper mapper,
+                          DBapiConnector dBapiConnector,
+                          UserService userService,
+                          MailService mailService){
         this.mapper=mapper;
         this.dBapiConnector=dBapiConnector;
+        this.userService=userService;
+        this.mailService=mailService;
     }
 
     private static final Logger log = LoggerFactory.getLogger(AirlineService.class);
@@ -38,8 +47,12 @@ public class AirlineService {
         Airline airline=mapper.mapAirlineDetailsDtoToAirlineObject(airlineRegistrationDto,airlineAdmin);
 
         airline=dBapiConnector.callCreateAirlineEndpoint(airline);
+        log.info("Calling dbApiConnector callCreateAirlineEndpoint  with payload: "+airline.toString());
 
-
+        List<AppUser> systemAdminList = userService.getAllSystemAdmins();
+        // Mail all system admins
+        mailService.mailSystemAdminForAirlineRegistration(systemAdminList, airline);
+        return airline;
 
     }
 }

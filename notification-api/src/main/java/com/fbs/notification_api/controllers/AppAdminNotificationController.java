@@ -5,10 +5,9 @@ import com.fbs.notification_api.service.AppAdminNotificationService;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/notify/appadmin")
@@ -23,11 +22,13 @@ public class AppAdminNotificationController {
         this.appAdminNotificationService=appAdminNotificationService;
     }
 
-    @PutMapping("/airline-registration")
-    public void airlineRegistrationRequestNotification(@RequestBody AirlineRegistrationReqDto airlineRegistrationReqDto){
+    @PostMapping("/airline-registration")
+    public ResponseEntity airlineRegistrationRequestNotification(@RequestBody AirlineRegistrationReqDto airlineRegistrationReqDto){
+        log.info("✅ Mail triggered successfully for admin {}", airlineRegistrationReqDto.getAppAdmin().getEmail());
         log.info("Inside airlineRegistrationRequestNotification with payload "+airlineRegistrationReqDto.toString());
 
         appAdminNotificationService.sendAirlineRegistrationRequestNotification(airlineRegistrationReqDto);
+        return new ResponseEntity(new Object(), HttpStatus.OK);
     }
 
 }

@@ -30,7 +30,7 @@ public class AirlineController {
 
     @PostMapping("/register")
     public ResponseEntity registerAirline(@RequestBody AirlineRegistrationDto airlineDetails){
-        log.info("Airline  registerAirline method got called with the request body: "+airlineDetails.toString());
+        log.info("inside registerAirline method with the airlineDetails object: "+airlineDetails.toString());
         log.info("calling airlineService registerAirline method");
 
         Airline airline=airlineService.registerAirline(airlineDetails);

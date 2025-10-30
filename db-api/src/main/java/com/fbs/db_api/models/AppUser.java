@@ -25,6 +25,7 @@ public class AppUser {
     boolean isVerified;
     String userType;
     String status;
+
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
 

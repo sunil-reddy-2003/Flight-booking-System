@@ -42,12 +42,14 @@ public class AppAdminNotificationService {
         context.setVariable("airlineAdminName",airlineRegistrationReqDto.getAirline().getAdmin().getName());
         context.setVariable("adminEmail",airlineRegistrationReqDto.getAirline().getAdmin().getEmail());
         context.setVariable("requestedTime",airlineRegistrationReqDto.getAirline().getCreatedAt().toString());
-         
+        context.setVariable("requestedTime", airlineRegistrationReqDto.getAirline().getCreatedAt().toString());
+        context.setVariable("acceptLink", "http://localhost:8081/api/v1/central/airline/request/accept/" + airlineRegistrationReqDto.getAirline().getId().toString());
+        context.setVariable("rejectLink", "http://localhost:8081/api/v1/central/airline/request/reject/" + airlineRegistrationReqDto.getAirline().getId().toString());
 
         String htmlContent = templateEngine.process("airline-registration-request",context);
 
         try{
-            mimeMessageHelper.setTo(airlineRegistrationReqDto.getAdmin().getEmail());
+            mimeMessageHelper.setTo(airlineRegistrationReqDto.getAppAdmin().getEmail());
             mimeMessageHelper.setSubject(airlineRegistrationReqDto.getAirline().getAirlineName()+" Registration Request");
 //            mimeMessageHelper.setText("Hey, There is a new Registration Request");
             mimeMessageHelper.setText(htmlContent,true);
