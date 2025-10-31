@@ -1,9 +1,9 @@
 package com.fbs.central_api.connectors;
 
 import com.fbs.central_api.dto.AllUsersDto;
+import com.fbs.central_api.exceptions.NoSystemAdminsFoundException;
 import com.fbs.central_api.models.Airline;
 import com.fbs.central_api.models.AppUser;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,6 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @Component
-@Slf4j
 public class DBapiConnector {
 
     RestTemplate restTemplate;
@@ -43,7 +42,7 @@ public class DBapiConnector {
         //2.we want to tell which REST method we want use and what request body we want to pass
         RequestEntity request= RequestEntity.post(url).body(user);
 
-        log.info("Created request"+request.toString());
+        log.info("Created request{}", request.toString());
 
         //3.hit or make the request on postman to do this step. we hit send button
         //but, here we are going to use the REST template
@@ -52,7 +51,7 @@ public class DBapiConnector {
         log.info("Calling dbApi to create  user endpoint");
 
        ResponseEntity<AppUser> response= restTemplate.exchange(url, HttpMethod.POST,request,AppUser.class);
-       log.info("Response: "+response.toString());
+       log.info("Response:{}",response.toString());
 
         return response.getBody();
     }
@@ -70,7 +69,7 @@ public class DBapiConnector {
 
         ResponseEntity<Airline> response=restTemplate.exchange(url,HttpMethod.POST,request, Airline.class);
 
-        log.info("Response: "+response.toString());
+        log.info("Response:{}",response.toString());
 
         return response.getBody();
 
@@ -80,12 +79,31 @@ public class DBapiConnector {
     This function will make request to db-api callGetAllUsersByUserType endpoint such that we will get all the system admins from the users table.
      */
 
-    public List<AppUser> callGetAllUsersByUserType(String userType){
+
+    public List<AppUser> callGetAllUsersByUserType(String userType) {
         // Do, we have any this kind of endpoint developed in DB Api
+
         String url = dbApiBaseurl + "/user/get/" + userType;
+
         RequestEntity request = RequestEntity.get(url).build();
-        ResponseEntity<AllUsersDto> resp = restTemplate.exchange(url, HttpMethod.GET, request, AllUsersDto.class);
-        return resp.getBody().getAppUsers();
+
+        ResponseEntity<AllUsersDto> resp =
+                restTemplate.exchange(url, HttpMethod.GET, request, AllUsersDto.class);
+
+        // NULL check
+        if (resp.getBody() == null || resp.getBody().getAppUsers() == null) {
+            throw new NoSystemAdminsFoundException("SYSTEM_ADMIN list is null.");
+        }
+
+        List<AppUser> admins = resp.getBody().getAppUsers();
+
+        // EMPTY LIST check
+        if (admins.isEmpty()) {
+            throw new NoSystemAdminsFoundException("No SYSTEM_ADMIN users found in the system.");
+        }
+
+        return admins;
     }
+
 
 }
