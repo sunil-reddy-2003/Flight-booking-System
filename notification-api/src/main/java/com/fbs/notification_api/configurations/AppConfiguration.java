@@ -14,26 +14,41 @@ public class AppConfiguration {
 
     @Bean
     public HashMap<Integer,Integer> generateHashMap(){
+        // This bean creates and returns an empty HashMap that can be used anywhere in the project
         return new HashMap<>();
     }
 
     @Bean
     public JavaMailSender generateJavaMailSender(){
+        // This bean creates and configures the JavaMailSender object used to send emails from the backend
         JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
-        // Our backend api needs to send mail to the user for sending mail
-        // We need to provide crendentials of the emailId by using which our backend will send mail to the users of application
-        javaMailSender.setHost("smtp.gmail.com"); // For now email which i am using belongs to gmail so, the host will be smtp.gmail.com
-        javaMailSender.setPort(587); // genrally to send mail from our computer we require some port number so, the port number which we will use is 587
-        javaMailSender.setUsername("sunilreddymandadi@gmail.com");// We will be sending email so, by what email our spring application will send mail to the users
-        javaMailSender.setPassword("xcws kwub xtne nptc"); // Password of the email.... It is app password, not actual password
+
+        // Set the Gmail SMTP server because we are using a Gmail account to send emails
+        javaMailSender.setHost("smtp.gmail.com");
+
+        // Port 587 is used for sending emails using TLS (secure email sending)
+        javaMailSender.setPort(587);
+
+        // The email address that will be used by the backend to send emails to users
+        javaMailSender.setUsername("sunilreddymandadi@gmail.com");
+
+        // This is the Gmail app password (not the actual Gmail login password)
+        javaMailSender.setPassword("xcws kwub xtne nptc");
+
         Properties props = javaMailSender.getJavaMailProperties();
-        props.put("mail.smtp.auth", "true"); // Our springboot api will connect gmail to send email via password so, mail.smtp.auth is true
-        props.put("mail.smtp.starttls.enable", "true"); // This property we are setting for secure connection
+
+        // Enable authentication so Spring Boot can log into Gmail using the app password
+        props.put("mail.smtp.auth", "true");
+
+        // Enable TLS encryption to send emails securely
+        props.put("mail.smtp.starttls.enable", "true");
+
         return javaMailSender;
     }
 
     @Bean
     public TemplateEngine getThymeleafBean(){
+        // This bean creates a TemplateEngine object used by Thymeleaf to process email templates
         return new TemplateEngine();
     }
 }
