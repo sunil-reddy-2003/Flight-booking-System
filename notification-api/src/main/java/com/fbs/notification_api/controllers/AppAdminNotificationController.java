@@ -4,7 +4,6 @@ import com.fbs.notification_api.dto.AirlineRegistrationReqDto;
 import com.fbs.notification_api.service.AppAdminNotificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,10 +22,10 @@ public class AppAdminNotificationController {
     @PostMapping("/airline-registration")
     public ResponseEntity airlineRegistrationRequestNotification(@RequestBody AirlineRegistrationReqDto airlineRegistrationReqDto){
         log.info("✅ Mail triggered successfully for admin {}", airlineRegistrationReqDto.getAppAdmin().getEmail());
-        log.info("Inside airlineRegistrationRequestNotification with payload "+airlineRegistrationReqDto.toString());
+        log.info("Inside airlineRegistrationRequestNotification with payload {}", airlineRegistrationReqDto.toString());
 
         appAdminNotificationService.sendAirlineRegistrationRequestNotification(airlineRegistrationReqDto);
-        return new ResponseEntity(new Object(), HttpStatus.OK);
+        return ResponseEntity.ok("ok");
     }
 
 }

@@ -35,4 +35,15 @@ public class AppUserController {
         allUsersDto.setAppUsers(users);
         return new ResponseEntity(allUsersDto, HttpStatus.OK);
     }
+
+    @PutMapping("/update")
+    public ResponseEntity  update(@RequestBody AppUser user){
+        return new ResponseEntity(appUserRepo.save(user),HttpStatus.OK);
+    }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity getUserByEmail(@PathVariable String email){
+        AppUser user=appUserRepo.findUserByEmail(email);
+        return new ResponseEntity(user,HttpStatus.OK);
+    }
 }

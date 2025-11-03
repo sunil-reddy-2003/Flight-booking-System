@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.UUID;
 
 @Component
 public class DBapiConnector {
@@ -105,5 +106,31 @@ public class DBapiConnector {
         return admins;
     }
 
+    public Airline callGetAirlineByIdEndpoint(UUID airlineId){
+        String url = dbApiBaseurl+"/airline/"+airlineId.toString();
+        RequestEntity airlineRequest= RequestEntity.get(url).build();
+        ResponseEntity<Airline> response=restTemplate.exchange(url,HttpMethod.GET,airlineRequest,Airline.class);
+        return response.getBody();
+    }
 
+    public Airline callUpdateAirlineEndpoint(Airline airline){
+        String url= dbApiBaseurl+"/airline/update";
+        RequestEntity airlineRequest=RequestEntity.put(url).body(airline);
+        ResponseEntity<Airline> response=restTemplate.exchange(url,HttpMethod.PUT,airlineRequest, Airline.class);
+        return response.getBody();
+    }
+
+    public AppUser callUpdateUserEndpoint(AppUser user){
+        String url= dbApiBaseurl+"/user/update";
+        RequestEntity userRequest=RequestEntity.put(url).body(user);
+        ResponseEntity<AppUser> response=restTemplate.exchange(url,HttpMethod.PUT,userRequest, AppUser.class);
+        return response.getBody();
+    }
+
+    public AppUser callGetUserByEmailEndpoint(String email){
+        String url=dbApiBaseurl+"/user/email/"+email;
+        RequestEntity request=RequestEntity.get(url).build();
+        ResponseEntity<AppUser> response=restTemplate.exchange(url,HttpMethod.GET,request, AppUser.class);
+        return response.getBody();
+    }
 }

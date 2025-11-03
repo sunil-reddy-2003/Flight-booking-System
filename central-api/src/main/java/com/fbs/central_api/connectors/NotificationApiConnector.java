@@ -1,6 +1,8 @@
 package com.fbs.central_api.connectors;
 
 import com.fbs.central_api.dto.AirlineRegistrationReqDto;
+import com.fbs.central_api.dto.AirlineRejectDto;
+import com.fbs.central_api.models.Airline;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +46,24 @@ public class NotificationApiConnector {
         } catch (Exception e) {
             log.error("❌ Error while calling Notification API: {}", e.getMessage(), e);
         }
+    }
+
+    public void notifyAcceptRequestToAirlineAdmin(Airline airline){
+        String url = notificationBaseUrl+"/airline/admin/accept-request";
+        RequestEntity airlineRequest=RequestEntity.put(url).body(airline);
+        log.info("📤📤📤 Calling Notification API at: {}", url);
+        ResponseEntity<Object> response=restTemplate.exchange(url,HttpMethod.PUT,airlineRequest,Object.class);
+        log.info("✅✅✅ Accept Notification API response: {}", response.getStatusCode());
+    }
+
+    public void notifyRejectRequestToAirlineAdmin(AirlineRejectDto airlineRejectDto){
+        String url= notificationBaseUrl+"/airline/admin/reject-request";
+        RequestEntity airlineRequest=RequestEntity.put(url).body(airlineRejectDto);
+        log.info("❌❌❌ Calling reject Notification API at: {}", url);
+        ResponseEntity<Object> response=restTemplate.exchange(url,HttpMethod.PUT,airlineRequest,Object.class);
+        log.info("✅✅✅ Reject Notification API response: {}", response.getStatusCode());
+
+
 
     }
 }
