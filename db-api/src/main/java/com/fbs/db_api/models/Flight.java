@@ -13,7 +13,7 @@ public class Flight {
     UUID id;
 
     @ManyToOne
-    AirLine airLine;
+    Airline airLine;
 
     @ManyToOne
     AirCraft airCraft;
@@ -38,7 +38,7 @@ public class Flight {
     public Flight() {
     }
 
-    public Flight(UUID id, AirLine airLine, AirCraft airCraft, String sourceAirport, String destinationAirport, String flightType, int totalTime, LocalDateTime boardingTime, int boardingMinutes, LocalDateTime departureTime, LocalDateTime arrivalTime, boolean isConnecting, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Flight(UUID id, Airline airLine, AirCraft airCraft, String sourceAirport, String destinationAirport, String flightType, int totalTime, LocalDateTime boardingTime, int boardingMinutes, LocalDateTime departureTime, LocalDateTime arrivalTime, boolean isConnecting, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.airLine = airLine;
         this.airCraft = airCraft;
@@ -63,11 +63,11 @@ public class Flight {
         this.id = id;
     }
 
-    public AirLine getAirLine() {
+    public Airline getAirLine() {
         return airLine;
     }
 
-    public void setAirLine(AirLine airLine) {
+    public void setAirLine(Airline airLine) {
         this.airLine = airLine;
     }
 

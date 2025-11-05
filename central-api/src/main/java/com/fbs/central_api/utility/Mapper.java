@@ -1,17 +1,23 @@
 package com.fbs.central_api.utility;
 
+import com.fbs.central_api.dto.AircraftRegistrationDto;
 import com.fbs.central_api.dto.AirlineRegistrationDto;
 import com.fbs.central_api.enums.AirlineStatus;
 import com.fbs.central_api.enums.UserStatus;
 import com.fbs.central_api.enums.UserType;
+import com.fbs.central_api.models.Aircraft;
 import com.fbs.central_api.models.Airline;
 import com.fbs.central_api.models.AppUser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
 @Component
 public class Mapper {
+    private static final Logger log = LoggerFactory.getLogger(Mapper.class);
+
     public AppUser mapAirlineDetailsDtoToAppUser(AirlineRegistrationDto airlineDetails){
         AppUser airlineAdmin= new AppUser();
         airlineAdmin.setEmail(airlineDetails.getEmail());
@@ -39,6 +45,21 @@ public class Mapper {
         airline.setUpdatedAt(LocalDateTime.now());
 
         return airline;
+    }
+
+    public Aircraft mapAircraftDtoToAircraft(AircraftRegistrationDto aircraftRegistrationDto,
+                                             Airline airline){
+        Aircraft aircraft = new Aircraft();
+        aircraft.setAirline(airline);
+        log.info("inside mapAircraftDtoToAircraft method with airline:{}",airline.toString());
+
+        aircraft.setCapacity(aircraftRegistrationDto.getCapacity());
+        aircraft.setManufacturer(aircraftRegistrationDto.getManufacturer());
+        aircraft.setModelName(aircraftRegistrationDto.getModelName());
+        aircraft.setTotalFlights(aircraftRegistrationDto.getTotalFlights());
+        aircraft.setBuildDate(aircraftRegistrationDto.getBuildDate());
+        aircraft.setModelNumber(aircraftRegistrationDto.getModelNumber());
+        return aircraft;
     }
 
 }

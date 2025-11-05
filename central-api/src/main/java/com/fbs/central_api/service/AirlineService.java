@@ -97,4 +97,8 @@ public class AirlineService {
         mailService.notifyRejectRequestToAirlineAdmin(airline.getAdmin().getEmail(),airline.getAdmin().getName(),result);
 
     }
+
+    public Airline getAirlineByAdminId(UUID airlineId){
+        return dBapiConnector.callGetAirlineByAdminIdEndpoint(airlineId);
+    }
 }

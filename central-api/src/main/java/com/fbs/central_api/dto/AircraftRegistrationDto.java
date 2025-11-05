@@ -1,47 +1,25 @@
-package com.fbs.db_api.models;
-
-import jakarta.persistence.*;
+package com.fbs.central_api.dto;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
-@Entity
-@Table(name = "aircrafts")
-public class AirCraft {
-
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    UUID id;
+public class AircraftRegistrationDto {
     int modelNumber;
     String manufacturer;
     String modelName;
     int totalFlights;
     LocalDate buildDate;
-    @ManyToOne
-    Airline airline;
     int capacity;
 
-    public AirCraft() {
+    public AircraftRegistrationDto() {
     }
 
-    public AirCraft(UUID id, int modelNumber, String manufacturer, String modelName, int totalFlights, LocalDate buildDate, Airline airline, int capacity) {
-        this.id = id;
+    public AircraftRegistrationDto(int modelNumber, String manufacturer, String modelName, int totalFlights, LocalDate buildDate, int capacity) {
         this.modelNumber = modelNumber;
         this.manufacturer = manufacturer;
         this.modelName = modelName;
         this.totalFlights = totalFlights;
         this.buildDate = buildDate;
-        this.airline = airline;
         this.capacity = capacity;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public int getModelNumber() {
@@ -84,14 +62,6 @@ public class AirCraft {
         this.buildDate = buildDate;
     }
 
-    public Airline getAirline() {
-        return airline;
-    }
-
-    public void setAirline(Airline airline) {
-        this.airline = airline;
-    }
-
     public int getCapacity() {
         return capacity;
     }
@@ -102,14 +72,12 @@ public class AirCraft {
 
     @Override
     public String toString() {
-        return "AirCraft{" +
-                "id=" + id +
-                ", modelNumber=" + modelNumber +
+        return "AircraftRegistrationDto{" +
+                "modelNumber=" + modelNumber +
                 ", manufacturer='" + manufacturer + '\'' +
                 ", modelName='" + modelName + '\'' +
                 ", totalFlights=" + totalFlights +
                 ", buildDate=" + buildDate +
-                ", airline=" + airline +
                 ", capacity=" + capacity +
                 '}';
     }

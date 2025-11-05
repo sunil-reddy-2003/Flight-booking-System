@@ -2,6 +2,7 @@ package com.fbs.central_api.connectors;
 
 import com.fbs.central_api.dto.AllUsersDto;
 import com.fbs.central_api.exceptions.NoSystemAdminsFoundException;
+import com.fbs.central_api.models.Aircraft;
 import com.fbs.central_api.models.Airline;
 import com.fbs.central_api.models.AppUser;
 import org.slf4j.Logger;
@@ -131,6 +132,22 @@ public class DBapiConnector {
         String url=dbApiBaseurl+"/user/email/"+email;
         RequestEntity request=RequestEntity.get(url).build();
         ResponseEntity<AppUser> response=restTemplate.exchange(url,HttpMethod.GET,request, AppUser.class);
+        return response.getBody();
+    }
+
+    public Airline callGetAirlineByAdminIdEndpoint(UUID adminId){
+        String url =dbApiBaseurl+"/airline/get/admin/"+adminId.toString();
+        RequestEntity request=RequestEntity.get(url).build();
+        ResponseEntity<Airline> response=restTemplate.exchange(url,HttpMethod.GET,request, Airline.class);
+        return response.getBody();
+    }
+
+    public Aircraft callSaveAircraftEndpoint(Aircraft aircraft){
+        String url= dbApiBaseurl+"/aircraft/save";
+        log.info("Saving aircraft {} for airline {}", aircraft.getModelName(), aircraft.getAirline().getAirlineName());
+
+        RequestEntity request=RequestEntity.post(url).body(aircraft);
+        ResponseEntity<Aircraft> response=restTemplate.exchange(url,HttpMethod.POST,request, Aircraft.class);
         return response.getBody();
     }
 }

@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 @Entity
 @Table(name = "airlines")
-public class AirLine {
+public class Airline {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,10 +25,10 @@ public class AirLine {
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
 
-    public AirLine() {
+    public Airline() {
     }
 
-    public AirLine(UUID id, String website, String airlineName, String companyName, int employees, int totalFlights, AppUser admin, String status, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public Airline(UUID id, String website, String airlineName, String companyName, int employees, int totalFlights, AppUser admin, String status, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.website = website;
         this.airlineName = airlineName;

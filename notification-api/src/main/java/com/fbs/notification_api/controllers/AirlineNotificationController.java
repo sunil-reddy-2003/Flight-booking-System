@@ -4,6 +4,8 @@ import com.fbs.notification_api.dto.AirlineRejectDto;
 import com.fbs.notification_api.models.Airline;
 import com.fbs.notification_api.service.AirlineNotificationService;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/notify/airline")
 public class AirlineNotificationController {
 
+    private static final Logger log = LoggerFactory.getLogger(AirlineNotificationController.class);
     AirlineNotificationService airlineNotificationService;
 
     public AirlineNotificationController(AirlineNotificationService airlineNotificationService) {
@@ -22,6 +25,7 @@ public class AirlineNotificationController {
 
     @PutMapping("/admin/accept-request")
     public void airlineAdminAcceptNotification(@RequestBody Airline airline){
+
         log.info("✅ Mail triggered successfully for admin {}", airline.getAdmin().getEmail());
         log.info("Inside airlineAdminAcceptNotification with payload "+airline.toString());
 

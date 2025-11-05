@@ -1,6 +1,6 @@
 package com.fbs.db_api.controllers;
 
-import com.fbs.db_api.models.AirLine;
+import com.fbs.db_api.models.Airline;
 import com.fbs.db_api.repositories.AirlineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,21 +21,25 @@ public class AirlineController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity createAirline(@RequestBody AirLine airLine){
-        AirLine airlineResp = airlineRepository.save(airLine);
+    public ResponseEntity createAirline(@RequestBody Airline airLine){
+        Airline airlineResp = airlineRepository.save(airLine);
         return new ResponseEntity(airlineResp,HttpStatus.CREATED);
     }
 
     @GetMapping("/{airlineId}")
     public ResponseEntity getAirlineById(@PathVariable UUID airlineId){
-        AirLine airLine= airlineRepository.findById(airlineId).orElse(null);
+        Airline airLine= airlineRepository.findById(airlineId).orElse(null);
         return new ResponseEntity(airLine,HttpStatus.OK);
     }
 
     @PutMapping("/update")
-    public ResponseEntity  update(@RequestBody AirLine airLine){
+    public ResponseEntity  update(@RequestBody Airline airLine){
         return new ResponseEntity(airlineRepository.save(airLine),HttpStatus.OK);
     }
 
-
+    @GetMapping("/get/admin/{adminId}")
+    public ResponseEntity getAirlineByAdminId(@PathVariable UUID adminId){
+        Airline airLine=airlineRepository.getAirlineByAdminId(adminId);
+        return new ResponseEntity<>(airLine,HttpStatus.OK);
+    }
 }

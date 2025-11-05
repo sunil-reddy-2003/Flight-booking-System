@@ -1,7 +1,10 @@
 package com.fbs.central_api.controllers;
 
+import com.fbs.central_api.dto.AircraftRegistrationDto;
 import com.fbs.central_api.dto.AirlineRegistrationDto;
+import com.fbs.central_api.models.Aircraft;
 import com.fbs.central_api.models.Airline;
+import com.fbs.central_api.service.AircraftService;
 import com.fbs.central_api.service.AirlineService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,10 +22,13 @@ public class AirlineController {
     private static final Logger log = LoggerFactory.getLogger(AirlineController.class);
 
     AirlineService airlineService;
+    AircraftService aircraftService;
 
     @Autowired
-    public AirlineController(AirlineService airlineService) {
+    public AirlineController(AirlineService airlineService,
+                             AircraftService aircraftService) {
         this.airlineService=airlineService;
+        this.aircraftService=aircraftService;
     }
 
     @PostMapping("/register")
@@ -46,5 +52,13 @@ public class AirlineController {
     public void rejectAirlineRequest(@PathVariable UUID airlineId){
         log.info("rejectAirlineRequest airline id:{}",airlineId.toString());
         airlineService.rejectAirlineRequest(airlineId);
+    }
+
+    @PostMapping("/aircraft/register")
+    public Aircraft registerAircraft(@RequestBody AircraftRegistrationDto aircraftRegistrationDto,
+                                     @RequestHeader String Authorization){
+        log.info("registerAircraft with aircraftRegistrationDto :{}",aircraftRegistrationDto.toString());
+        log.info("Authorization :{}",Authorization);
+        return aircraftService.registerAircraft(aircraftRegistrationDto,Authorization);
     }
 }

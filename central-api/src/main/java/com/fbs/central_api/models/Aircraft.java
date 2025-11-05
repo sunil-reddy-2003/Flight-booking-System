@@ -1,31 +1,24 @@
-package com.fbs.db_api.models;
+package com.fbs.central_api.models;
 
-import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
-@Entity
-@Table(name = "aircrafts")
-public class AirCraft {
+public class Aircraft {
 
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     UUID id;
     int modelNumber;
     String manufacturer;
     String modelName;
     int totalFlights;
     LocalDate buildDate;
-    @ManyToOne
     Airline airline;
     int capacity;
 
-    public AirCraft() {
+    public Aircraft() {
     }
 
-    public AirCraft(UUID id, int modelNumber, String manufacturer, String modelName, int totalFlights, LocalDate buildDate, Airline airline, int capacity) {
+    public Aircraft(UUID id, int modelNumber, String manufacturer, String modelName, int totalFlights, LocalDate buildDate, Airline airline, int capacity) {
         this.id = id;
         this.modelNumber = modelNumber;
         this.manufacturer = manufacturer;
@@ -102,7 +95,7 @@ public class AirCraft {
 
     @Override
     public String toString() {
-        return "AirCraft{" +
+        return "Aircraft{" +
                 "id=" + id +
                 ", modelNumber=" + modelNumber +
                 ", manufacturer='" + manufacturer + '\'' +
