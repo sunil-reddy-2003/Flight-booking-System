@@ -2,12 +2,12 @@ package com.fbs.central_api.utility;
 
 import com.fbs.central_api.dto.AircraftRegistrationDto;
 import com.fbs.central_api.dto.AirlineRegistrationDto;
+import com.fbs.central_api.dto.FlightDetailsDto;
+import com.fbs.central_api.dto.SeatMappingDto;
 import com.fbs.central_api.enums.AirlineStatus;
 import com.fbs.central_api.enums.UserStatus;
 import com.fbs.central_api.enums.UserType;
-import com.fbs.central_api.models.Aircraft;
-import com.fbs.central_api.models.Airline;
-import com.fbs.central_api.models.AppUser;
+import com.fbs.central_api.models.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -62,4 +62,42 @@ public class Mapper {
         return aircraft;
     }
 
+    public Flight mapFlightDetailsDtoToFLightModel(FlightDetailsDto flightDetailsDto,Airline airline,Aircraft aircraft){
+
+        log.info("inside mapFlightDetailsDtoToFLightModel:{}",flightDetailsDto.toString());
+        log.info("inside mapFlightDetailsDtoToFLightModel:{}",airline.toString());
+        log.info("inside mapFlightDetailsDtoToFLightModel:{}",aircraft.toString());
+
+        Flight flight=new Flight();
+        flight.setAirline(airline);
+        flight.setAircraft(aircraft);
+        flight.setConnecting(flightDetailsDto.isConnecting());
+        flight.setBoardingTime(flightDetailsDto.getBoardingTime());
+        flight.setBoardingTime(flightDetailsDto.getBoardingTime());
+        flight.setFlightType(flightDetailsDto.getFlightType());
+        flight.setBoardingMinutes(flightDetailsDto.getBoardingMinutes());
+        flight.setDepartureTime(flightDetailsDto.getDepartureTime());
+        flight.setTotalTime(flightDetailsDto.getTotalTime());
+        flight.setSourceAirport(flightDetailsDto.getSourceAirport());
+        flight.setCreatedAt(LocalDateTime.now());
+        flight.setUpdatedAt(LocalDateTime.now());
+        flight.setDestinationAirport(flightDetailsDto.getDestinationAirport());
+        flight.setArrivalTime(flightDetailsDto.getArrivalTime());
+
+        return flight;
+    }
+
+    public FlightSeatMapping mapFlightSeatMappingDtoToModel(SeatMappingDto seatMappingDto, Flight flight){
+        log.info("inside mapFlightSeatMappingDtoToModel : {}",flight.toString());
+        FlightSeatMapping flightSeatMapping = new FlightSeatMapping();
+        flightSeatMapping.setFlight(flight);
+        flightSeatMapping.setRange(seatMappingDto.getRange());
+        flightSeatMapping.setClassName(seatMappingDto.getClassName());
+        flightSeatMapping.setBasePrice(seatMappingDto.getBasePrice());
+        flightSeatMapping.setWindowPrice(seatMappingDto.getWindowPrice());
+        flightSeatMapping.setTotalWindow(seatMappingDto.getTotalWindow());
+        flightSeatMapping.setCreatedAt(LocalDateTime.now());
+        flightSeatMapping.setUpdatedAt(LocalDateTime.now());
+        return flightSeatMapping;
+    }
 }

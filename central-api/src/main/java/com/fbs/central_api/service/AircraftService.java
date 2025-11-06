@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class AircraftService {
 
@@ -53,5 +55,9 @@ public class AircraftService {
 
     public Aircraft saveAircraft(Aircraft aircraft){
         return dBapiConnector.callSaveAircraftEndpoint(aircraft);
+    }
+
+    public Aircraft getAircraftById(UUID aircraftId){
+        return dBapiConnector.callGetAircraftByIdEndpoint(aircraftId);
     }
 }

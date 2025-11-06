@@ -1,36 +1,20 @@
-package com.fbs.db_api.models;
-
-import jakarta.persistence.*;
+package com.fbs.central_api.models;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
-@Entity
-@Table(name = "flights")
+
 public class Flight {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     UUID id;
-
-    @ManyToOne
     Airline airline;
-
-    @ManyToOne
     Aircraft aircraft;
-
     String sourceAirport;
-
     String destinationAirport;
-
-    String flightType; //international or domestic or emergency
-
-    int totalTime; //in minutes
-
-    LocalDateTime boardingTime; //entering time into the aircraft
+    String flightType;
+    int totalTime;
+    LocalDateTime boardingTime;
     int boardingMinutes;
-    LocalDateTime departureTime; //take off time
-    LocalDateTime arrivalTime;  //landing time
-
+    LocalDateTime departureTime;
+    LocalDateTime arrivalTime;
     boolean isConnecting;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;

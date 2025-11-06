@@ -1,47 +1,31 @@
-package com.fbs.db_api.models;
-
-import jakarta.persistence.*;
+package com.fbs.central_api.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
-@Entity
-@Table(name = "flights")
-public class Flight {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    UUID id;
+public class FlightDetailsDto {
 
-    @ManyToOne
-    Airline airline;
-
-    @ManyToOne
-    Aircraft aircraft;
-
+    UUID airlineId;
     String sourceAirport;
-
     String destinationAirport;
-
-    String flightType; //international or domestic or emergency
-
-    int totalTime; //in minutes
-
-    LocalDateTime boardingTime; //entering time into the aircraft
+    String flightType;
+    int totalTime;
+    LocalDateTime boardingTime;
     int boardingMinutes;
-    LocalDateTime departureTime; //take off time
-    LocalDateTime arrivalTime;  //landing time
-
+    LocalDateTime departureTime;
+    LocalDateTime arrivalTime;
     boolean isConnecting;
-    LocalDateTime createdAt;
-    LocalDateTime updatedAt;
+    UUID airCraftId;
+    List<SubFlightDto> subFlightDtos;
+    List<SeatMappingDto> seatMappingDtos;
 
-    public Flight() {
+
+    public FlightDetailsDto() {
     }
 
-    public Flight(UUID id, Airline airline, Aircraft aircraft, String sourceAirport, String destinationAirport, String flightType, int totalTime, LocalDateTime boardingTime, int boardingMinutes, LocalDateTime departureTime, LocalDateTime arrivalTime, boolean isConnecting, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.id = id;
-        this.airline = airline;
-        this.aircraft = aircraft;
+    public FlightDetailsDto(UUID airlineId, String sourceAirport, String destinationAirport, String flightType, int totalTime, LocalDateTime boardingTime, int boardingMinutes, LocalDateTime departureTime, LocalDateTime arrivalTime, boolean isConnecting, UUID airCraftId, List<SubFlightDto> subFlightDtos, List<SeatMappingDto> seatMappingDtos) {
+        this.airlineId = airlineId;
         this.sourceAirport = sourceAirport;
         this.destinationAirport = destinationAirport;
         this.flightType = flightType;
@@ -51,32 +35,19 @@ public class Flight {
         this.departureTime = departureTime;
         this.arrivalTime = arrivalTime;
         this.isConnecting = isConnecting;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+        this.airCraftId = airCraftId;
+        this.subFlightDtos = subFlightDtos;
+        this.seatMappingDtos = seatMappingDtos;
     }
 
-    public UUID getId() {
-        return id;
+
+
+    public UUID getAirlineId() {
+        return airlineId;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public Airline getAirline() {
-        return airline;
-    }
-
-    public void setAirline(Airline airline) {
-        this.airline = airline;
-    }
-
-    public Aircraft getAircraft() {
-        return aircraft;
-    }
-
-    public void setAircraft(Aircraft aircraft) {
-        this.aircraft = aircraft;
+    public void setAirlineId(UUID airlineId) {
+        this.airlineId = airlineId;
     }
 
     public String getSourceAirport() {
@@ -151,28 +122,34 @@ public class Flight {
         isConnecting = connecting;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public UUID getAirCraftId() {
+        return airCraftId;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setAirCraftId(UUID airCraftId) {
+        this.airCraftId = airCraftId;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+    public List<SubFlightDto> getSubFlightDtos() {
+        return subFlightDtos;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setSubFlightDtos(List<SubFlightDto> subFlightDtos) {
+        this.subFlightDtos = subFlightDtos;
+    }
+
+    public List<SeatMappingDto> getSeatMappingDtos() {
+        return seatMappingDtos;
+    }
+
+    public void setSeatMappingDtos(List<SeatMappingDto> seatMappingDtos) {
+        this.seatMappingDtos = seatMappingDtos;
     }
 
     @Override
     public String toString() {
-        return "Flight{" +
-                "id=" + id +
-                ", airline=" + airline +
-                ", aircraft=" + aircraft +
+        return "FlightDetailsDto{" +
+                "airlineId=" + airlineId +
                 ", sourceAirport='" + sourceAirport + '\'' +
                 ", destinationAirport='" + destinationAirport + '\'' +
                 ", flightType='" + flightType + '\'' +
@@ -182,8 +159,9 @@ public class Flight {
                 ", departureTime=" + departureTime +
                 ", arrivalTime=" + arrivalTime +
                 ", isConnecting=" + isConnecting +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
+                ", airCraftId=" + airCraftId +
+                ", subFlightDtos=" + subFlightDtos +
+                ", seatMappingDtos=" + seatMappingDtos +
                 '}';
     }
 }

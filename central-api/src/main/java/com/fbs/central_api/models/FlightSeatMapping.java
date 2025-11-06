@@ -1,17 +1,11 @@
-package com.fbs.db_api.models;
-
-import jakarta.persistence.*;
+package com.fbs.central_api.models;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
-@Entity
-@Table
-public class SubFlightSeatMapping extends SeatMapping{
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
+public class FlightSeatMapping{
+
     UUID id;
-    @ManyToOne
-    SubFlight flight;
     String className;
     String range; // 1-20
     int basePrice;
@@ -19,13 +13,13 @@ public class SubFlightSeatMapping extends SeatMapping{
     int totalWindow;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
+    Flight flight;
 
-    public SubFlightSeatMapping() {
+    public FlightSeatMapping() {
     }
 
-    public SubFlightSeatMapping(UUID id, SubFlight flight, String className, String range, int basePrice, int windowPrice, int totalWindow, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public FlightSeatMapping(UUID id, String className, String range, int basePrice, int windowPrice, int totalWindow, LocalDateTime createdAt, LocalDateTime updatedAt, Flight flight) {
         this.id = id;
-        this.flight = flight;
         this.className = className;
         this.range = range;
         this.basePrice = basePrice;
@@ -33,6 +27,7 @@ public class SubFlightSeatMapping extends SeatMapping{
         this.totalWindow = totalWindow;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
+        this.flight = flight;
     }
 
     public UUID getId() {
@@ -41,14 +36,6 @@ public class SubFlightSeatMapping extends SeatMapping{
 
     public void setId(UUID id) {
         this.id = id;
-    }
-
-    public SubFlight getFlight() {
-        return flight;
-    }
-
-    public void setFlight(SubFlight flight) {
-        this.flight = flight;
     }
 
     public String getClassName() {
@@ -107,11 +94,18 @@ public class SubFlightSeatMapping extends SeatMapping{
         this.updatedAt = updatedAt;
     }
 
+    public Flight getFlight() {
+        return flight;
+    }
+
+    public void setFlight(Flight flight) {
+        this.flight = flight;
+    }
+
     @Override
     public String toString() {
-        return "SubFlightSeatMapping{" +
+        return "FlightSeatMapping{" +
                 "id=" + id +
-                ", flight=" + flight +
                 ", className='" + className + '\'' +
                 ", range='" + range + '\'' +
                 ", basePrice=" + basePrice +
@@ -119,6 +113,7 @@ public class SubFlightSeatMapping extends SeatMapping{
                 ", totalWindow=" + totalWindow +
                 ", createdAt=" + createdAt +
                 ", updatedAt=" + updatedAt +
+                ", flight=" + flight +
                 '}';
     }
 }

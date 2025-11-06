@@ -6,29 +6,25 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 /*
-this flight seat mapping will be used for only non-connecting flights
+This flight seat mapping model will only be used for non-connecting flights
  */
 @Entity
 @Table(name = "flightseatmapping")
-public class FlightSeatMapping extends SeatMapping{
+public class FlightSeatMapping extends SeatMapping {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     UUID id;
-
+    String className;
+    String range; // 1-20
+    int basePrice;
+    int windowPrice;
+    int totalWindow;
+    LocalDateTime createdAt;
+    LocalDateTime updatedAt;
     @ManyToOne
     Flight flight;
 
-    LocalDateTime createdAt;
-    LocalDateTime updatedAt;
-
     public FlightSeatMapping() {
-    }
-
-    public FlightSeatMapping(UUID id, Flight flight, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.id = id;
-        this.flight = flight;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
     }
 
     public UUID getId() {
@@ -39,12 +35,44 @@ public class FlightSeatMapping extends SeatMapping{
         this.id = id;
     }
 
-    public Flight getFlight() {
-        return flight;
+    public String getClassName() {
+        return className;
     }
 
-    public void setFlight(Flight flight) {
-        this.flight = flight;
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    public String getRange() {
+        return range;
+    }
+
+    public void setRange(String range) {
+        this.range = range;
+    }
+
+    public int getBasePrice() {
+        return basePrice;
+    }
+
+    public void setBasePrice(int basePrice) {
+        this.basePrice = basePrice;
+    }
+
+    public int getWindowPrice() {
+        return windowPrice;
+    }
+
+    public void setWindowPrice(int windowPrice) {
+        this.windowPrice = windowPrice;
+    }
+
+    public int getTotalWindow() {
+        return totalWindow;
+    }
+
+    public void setTotalWindow(int totalWindow) {
+        this.totalWindow = totalWindow;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -63,18 +91,11 @@ public class FlightSeatMapping extends SeatMapping{
         this.updatedAt = updatedAt;
     }
 
-    @Override
-    public String toString() {
-        return "FlightSeatMapping{" +
-                "id=" + id +
-                ", flight=" + flight +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", className='" + className + '\'' +
-                ", range='" + range + '\'' +
-                ", basePrice=" + basePrice +
-                ", windowPrice=" + windowPrice +
-                ", totalWindow=" + totalWindow +
-                '}';
+    public Flight getFlight() {
+        return flight;
+    }
+
+    public void setFlight(Flight flight) {
+        this.flight = flight;
     }
 }

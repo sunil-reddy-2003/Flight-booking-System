@@ -2,9 +2,7 @@ package com.fbs.central_api.connectors;
 
 import com.fbs.central_api.dto.AllUsersDto;
 import com.fbs.central_api.exceptions.NoSystemAdminsFoundException;
-import com.fbs.central_api.models.Aircraft;
-import com.fbs.central_api.models.Airline;
-import com.fbs.central_api.models.AppUser;
+import com.fbs.central_api.models.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -148,6 +146,29 @@ public class DBapiConnector {
 
         RequestEntity request=RequestEntity.post(url).body(aircraft);
         ResponseEntity<Aircraft> response=restTemplate.exchange(url,HttpMethod.POST,request, Aircraft.class);
+        return response.getBody();
+    }
+
+    public Aircraft callGetAircraftByIdEndpoint(UUID aircraftID){
+        String url= dbApiBaseurl+ "/aircraft/"+aircraftID.toString();
+        RequestEntity request=RequestEntity.get(url).build();
+        ResponseEntity<Aircraft> response=restTemplate.exchange(url,HttpMethod.GET,request, Aircraft.class);
+        return response.getBody();
+    }
+
+    public Flight callCreateFlightEndPoint(Flight flight){
+        String url=dbApiBaseurl+"/flight/create";
+        log.info("inside callCreateFlightEndPoint with : {}",flight.toString());
+        RequestEntity request=RequestEntity.post(url).body(flight);
+        ResponseEntity<Flight> response=restTemplate.exchange(url,HttpMethod.POST,request, Flight.class);
+        return response.getBody();
+    }
+
+    public FlightSeatMapping callCreateFlightSeatMappingEndPoint(FlightSeatMapping flightSeatMapping){
+        String url = dbApiBaseurl+"/seatmapping/create";
+        log.info("inside callCreateFlightSeatMappingEndPoint with:{}",flightSeatMapping.toString());
+        RequestEntity request = RequestEntity.post(url).body(flightSeatMapping);
+        ResponseEntity<FlightSeatMapping> response = restTemplate.exchange(url,HttpMethod.POST,request, FlightSeatMapping.class);
         return response.getBody();
     }
 }

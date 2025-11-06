@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "aircrafts")
-public class AirCraft {
+public class Aircraft {
 
 
     @Id
@@ -22,10 +22,10 @@ public class AirCraft {
     Airline airline;
     int capacity;
 
-    public AirCraft() {
+    public Aircraft() {
     }
 
-    public AirCraft(UUID id, int modelNumber, String manufacturer, String modelName, int totalFlights, LocalDate buildDate, Airline airline, int capacity) {
+    public Aircraft(UUID id, int modelNumber, String manufacturer, String modelName, int totalFlights, LocalDate buildDate, Airline airline, int capacity) {
         this.id = id;
         this.modelNumber = modelNumber;
         this.manufacturer = manufacturer;

@@ -13,6 +13,8 @@ public class AirlineRegistrationDto {
     String password;
     long contactNumber;
 
+    public AirlineRegistrationDto() {
+    }
 
     public AirlineRegistrationDto(String website, String airlineName, String companyName, int employees, int totalFlights, String email, String password, long contactNumber) {
         this.website = website;
@@ -23,9 +25,6 @@ public class AirlineRegistrationDto {
         this.email = email;
         this.password = password;
         this.contactNumber = contactNumber;
-    }
-
-    public AirlineRegistrationDto() {
     }
 
     public String getWebsite() {

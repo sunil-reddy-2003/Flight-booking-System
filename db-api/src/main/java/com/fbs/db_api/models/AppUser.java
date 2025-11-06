@@ -33,16 +33,16 @@ public class AppUser {
     }
 
     public AppUser(UUID id, String name, String email, String password, long number, boolean isVerified, String userType, String status, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.number = number;
-        this.isVerified = isVerified;
-        this.userType = userType;
-        this.status = status;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
+            this.id = id;
+            this.name = name;
+            this.email = email;
+            this.password = password;
+            this.number = number;
+            this.isVerified = isVerified;
+            this.userType = userType;
+            this.status = status;
+            this.createdAt = createdAt;
+            this.updatedAt = updatedAt;
     }
 
     public UUID getId() {

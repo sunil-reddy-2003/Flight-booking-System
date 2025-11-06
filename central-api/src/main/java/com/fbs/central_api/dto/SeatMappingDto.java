@@ -1,31 +1,22 @@
-package com.fbs.db_api.models;
-
-import jakarta.persistence.*;
+package com.fbs.central_api.dto;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
-@Entity
-@Table
-public class SubFlightSeatMapping extends SeatMapping{
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    UUID id;
-    @ManyToOne
-    SubFlight flight;
-    String className;
-    String range; // 1-20
-    int basePrice;
-    int windowPrice;
-    int totalWindow;
-    LocalDateTime createdAt;
-    LocalDateTime updatedAt;
 
-    public SubFlightSeatMapping() {
+public class SeatMappingDto {
+
+    private String className;
+    private String range; // e.g., 1–20
+    private int basePrice;
+    private int windowPrice;
+    private int totalWindow;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+
+    public SeatMappingDto() {
     }
 
-    public SubFlightSeatMapping(UUID id, SubFlight flight, String className, String range, int basePrice, int windowPrice, int totalWindow, LocalDateTime createdAt, LocalDateTime updatedAt) {
-        this.id = id;
-        this.flight = flight;
+    public SeatMappingDto(String className, String range, int basePrice, int windowPrice, int totalWindow,
+                          LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.className = className;
         this.range = range;
         this.basePrice = basePrice;
@@ -33,22 +24,6 @@ public class SubFlightSeatMapping extends SeatMapping{
         this.totalWindow = totalWindow;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public SubFlight getFlight() {
-        return flight;
-    }
-
-    public void setFlight(SubFlight flight) {
-        this.flight = flight;
     }
 
     public String getClassName() {
@@ -109,10 +84,8 @@ public class SubFlightSeatMapping extends SeatMapping{
 
     @Override
     public String toString() {
-        return "SubFlightSeatMapping{" +
-                "id=" + id +
-                ", flight=" + flight +
-                ", className='" + className + '\'' +
+        return "SeatMappingDto{" +
+                "className='" + className + '\'' +
                 ", range='" + range + '\'' +
                 ", basePrice=" + basePrice +
                 ", windowPrice=" + windowPrice +
